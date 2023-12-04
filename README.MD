@@ -9,10 +9,13 @@ You can also view the UI preview on ui_screenshot.png
 ## Setup Classifier
 Change to the 'classifier' directory:
 >`cd classifier`
+
 Install depedencies (FastAPI, PyTorch, OpenCV, etc.):
 >`pip install -r requirements.txt`
+
 Start FastAPI server:
 >`uvicorn main:app --reload`
+
 Nice! Now, the server should be defaulted to port 8000!
 
 ## Start Java Project
