@@ -4,7 +4,8 @@ Hey there! This project is a multi-threaded webscraper that uses JSoup to scrape
 
 Note that the global constants MAX_DEPTH and MAX_PAGES are both defaulted to 1. Since machine learning compute can be quite costly and slow (and this project is not production grade), these constants were minimized to reduce waiting time. You can change these constants at your own discretion. Please be patient, thanks!!!
 
-You can also view the UI preview on ui_screenshot.png 
+## UI Preview
+![example_ui](https://github.com/kelanliu1/image_finder/assets/67593159/15f4c51c-ae8d-472e-a064-fcf1b3dd32f1)
 
 ## Setup Classifier
 Change to the 'classifier' directory:
