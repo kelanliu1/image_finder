@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+httpx
+torch
+numpy
+opencv-python-headless
+os

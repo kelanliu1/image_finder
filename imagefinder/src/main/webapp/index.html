@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Image Webscraper Powered w/ FastAPI and Machine Learning &#129327; &#129327; &#129327;</h1>
+    <h2>by Kelan Liu</h2>
+
+    <div class="content">
+        <div class="input">
+            <form>
+                <input type="text" name="url" placeholder="Enter a URL">
+            </form>
+            <div class="button-container">
+				<button type="button">Do Machine Learning Magic &#129668;</button>
+				<div class="loader hidden"></div>
+			</div>			
+        </div>
+    </div>
+
+    <div style="padding-top:20px;" class="output">
+        <div class="results"></div>
+    </div>
+
+    <script>
+        var resultList = document.querySelector('.results');
+        var urlInput = document.querySelector('input[name=url]')
+
+        function apiCallBack(xhr, callback) {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status != 200) {
+                    let message = xhr.status + ":" + xhr.statusText + ":" + xhr.responseText;
+                    alert(message);
+                    throw 'API call returned bad code: ' + xhr.status;
+                }
+                let response = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+                if (callback) {
+                    callback(response);
+                }
+            }
+        }
+
+        function updateList(response) {
+            console.log("Response:", response);
+            resultList.innerHTML = '';
+            for (const [imageUrl, classifications] of Object.entries(response)) {
+                var imgElem = document.createElement("img");
+                imgElem.src = imageUrl;
+                var resultItem = document.createElement("div");
+                resultItem.className = "result-item";
+                resultItem.appendChild(imgElem);
+
+                var classificationList = document.createElement("ul");
+                classifications.forEach(function(classification) {
+                    var listItem = document.createElement("li");
+                    listItem.textContent = classification;
+                    classificationList.appendChild(listItem);
+                });
+                resultItem.appendChild(classificationList);
+                resultList.appendChild(resultItem);
+            }
+
+            // Hide the loader
+            document.querySelector('.loader').classList.add('hidden');
+        }
+
+        function makeApiCall(url, method, obj, callback) {
+            let xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onreadystatechange = apiCallBack.bind(null, xhr, callback);
+            xhr.send(obj ? (obj instanceof FormData || typeof obj === 'string' ? obj : JSON.stringify(obj)) : null);
+        }
+
+        document.querySelector('button').addEventListener("click", function(event) {
+            event.preventDefault();
+            // Show the loader
+            document.querySelector('.loader').classList.remove('hidden');
+            makeApiCall('/main?url=' + urlInput.value, 'POST', null, updateList);
+        });
+    </script>
+</body>
+</html>
